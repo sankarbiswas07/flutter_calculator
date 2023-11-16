@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../views/home_view.dart';
+
 class MyApp extends StatelessWidget {
   const MyApp({
     Key? key,
@@ -7,18 +9,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: "Flutter learn",
-        home: Material(
-            child: Container(
-                color: Colors.indigo,
-                child: const Center(
-                    child: Text(
-                  "Hello World!",
-                  style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.amber,
-                      fontWeight: FontWeight.bold),
-                )))));
+    return const MaterialApp(title: "Flutter learn", home: HomeView());
   }
 }
