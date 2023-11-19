@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../views/home_view.dart';
+import 'home_view.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({
@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Flutter learn",
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.lightBlue,
       ),
