@@ -23,8 +23,8 @@ class _CalculatorViewState extends State<CalculatorView> {
   @override
   void initState() {
     super.initState();
-    inputXController.text = x.toString();
-    inputYController.text = y.toString();
+    // inputXController.text = x.toString();
+    // inputYController.text = y.toString();
   }
 
   @override
@@ -36,9 +36,16 @@ class _CalculatorViewState extends State<CalculatorView> {
           const SizedBox(
             height: 60,
           ),
-          NumInput(hint: "Type number one", controller: inputXController),
-          NumInput(hint: "Type number two", controller: inputYController),
+          NumInput(
+              key: const Key("InputX"),
+              hint: "Type number one",
+              controller: inputXController),
+          NumInput(
+              key: const Key("InputY"),
+              hint: "Type number two",
+              controller: inputYController),
           Text(
+            key: const Key("ResultZ"),
             formatNumber(z),
             style: const TextStyle(
               fontSize: 64,
@@ -176,6 +183,7 @@ class NumInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(children: [
       TextField(
+        // key: key,
         controller: controller,
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
