@@ -3,32 +3,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class IceCreamView extends StatefulWidget {
+class IceCreamView extends StatelessWidget {
   const IceCreamView({super.key});
 
-  @override
-  State<IceCreamView> createState() => _IceCreamViewState();
-}
-
-class _IceCreamViewState extends State<IceCreamView> {
-  Map<String, dynamic>? decodedIceCreams;
-
-  @override
-  void initState() {
-    super.initState();
-    loadIceCreams();
-  }
-
-  Future<void> loadIceCreams() async {
+  Future<Map<String, dynamic>> loadIceCreams() async {
     final rawIceCreams = await rootBundle.loadString("assets/iceCream.json");
-    decodedIceCreams = jsonDecode(rawIceCreams);
-    await Future.delayed(
-      const Duration(milliseconds: 800),
-    );
-    setState(() {
-      // ensuring application rebuild, otherwise ice-creams will melt
-      print("view re-rendered!");
-    });
+    await Future.delayed(const Duration(milliseconds: 1000));
+    final decodedIceCreams = jsonDecode(rawIceCreams);
+    return decodedIceCreams;
   }
 
   @override
@@ -56,12 +38,30 @@ class _IceCreamViewState extends State<IceCreamView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  if (decodedIceCreams != null)
-                    const Text("ice-cream loaded !!")
-                  else
-                    const CircularProgressIndicator.adaptive(
-                      backgroundColor: Colors.amber,
-                    )
+                  FutureBuilder(
+                    future: loadIceCreams(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        // Check if there is data
+                        if (snapshot.hasData) {
+                          final iceCreams =
+                              snapshot.data as Map<String, dynamic>;
+                          return Text(iceCreams["iceCreams"][0]["flavor"]);
+                        } else {
+                          // Handle the case where there is no data
+                          return const Text("No data available");
+                        }
+                      } else if (snapshot.hasError) {
+                        // Handle the case where an error occurred
+                        return const Text("Error loading data");
+                      } else {
+                        // Show the loading indicator while waiting
+                        return const CircularProgressIndicator.adaptive(
+                          backgroundColor: Colors.amber,
+                        );
+                      }
+                    },
+                  )
                   // const Text("ice-cream melted !!")
                 ],
               ),
