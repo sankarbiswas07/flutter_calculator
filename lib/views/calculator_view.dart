@@ -16,6 +16,10 @@ class _CalculatorViewState extends State<CalculatorView> {
   final inputXController = TextEditingController();
   final inputYController = TextEditingController();
 
+  String formatNumber(num number) {
+    return number.toStringAsFixed(4);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -35,7 +39,7 @@ class _CalculatorViewState extends State<CalculatorView> {
           NumInput(hint: "Type number one", controller: inputXController),
           NumInput(hint: "Type number two", controller: inputYController),
           Text(
-            z.toString(),
+            formatNumber(z),
             style: const TextStyle(
               fontSize: 64,
               fontWeight: FontWeight.bold,
