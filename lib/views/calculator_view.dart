@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CalculatorView extends StatelessWidget {
@@ -23,26 +24,97 @@ class CalculatorView extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          Container(
-            height: 60,
-            width: double.infinity, // Full width
-            decoration: BoxDecoration(
-              color: Colors.red, // Red background color
-              borderRadius: BorderRadius.circular(10), // 10px border radius
-            ),
-            child: InkWell(
-              onTap: () {
-                // Add your button click logic here
-              },
-              child: const Center(
-                child: Text(
-                  'Click Me!',
-                  style:
-                      TextStyle(color: Colors.white), // Set text color to white
+          // button: plus
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // button: divide
+              Container(
+                height: 48,
+                width: 48, // Full width
+                decoration: BoxDecoration(
+                  color: Colors.red, // Red background color
+                  borderRadius: BorderRadius.circular(8), // 10px border radius
+                ),
+                child: InkWell(
+                  onTap: () {
+                    // Add your button click logic here
+                    print("> / ");
+                  },
+                  child: const Icon(CupertinoIcons.divide, color: Colors.white),
                 ),
               ),
-            ),
+              // button: multiply
+              Container(
+                height: 48,
+                width: 48, // Full width
+                decoration: BoxDecoration(
+                  color: Colors.red, // Red background color
+                  borderRadius: BorderRadius.circular(8), // 10px border radius
+                ),
+                child: InkWell(
+                  onTap: () {
+                    // Add your button click logic here
+                    print("> x ");
+                  },
+                  child:
+                      const Icon(CupertinoIcons.multiply, color: Colors.white),
+                ),
+              ),
+              // button: plus
+              Container(
+                height: 48,
+                width: 48, // Full width
+                decoration: BoxDecoration(
+                  color: Colors.red, // Red background color
+                  borderRadius: BorderRadius.circular(8), // 10px border radius
+                ),
+                child: InkWell(
+                  onTap: () {
+                    // Add your button click logic here
+                    print("> + ");
+                  },
+                  child: const Icon(CupertinoIcons.add, color: Colors.white),
+                ),
+              ),
+              // button: minus
+              Container(
+                height: 48,
+                width: 48, // Full width
+                decoration: BoxDecoration(
+                  color: Colors.red, // Red background color
+                  borderRadius: BorderRadius.circular(8), // 10px border radius
+                ),
+                child: InkWell(
+                  onTap: () {
+                    // Add your button click logic here
+                    print("> - ");
+                  },
+                  child: const Icon(CupertinoIcons.minus, color: Colors.white),
+                ),
+              ),
+              // button: divide
+              Container(
+                height: 48,
+                width: 48, // Full width
+                decoration: BoxDecoration(
+                  color: Colors.red[900], // Red background color
+                  borderRadius: BorderRadius.circular(8), // 10px border radius
+                ),
+                child: InkWell(
+                  onTap: () {
+                    // Add your button click logic here
+                    print("> / ");
+                  },
+                  child: const Icon(CupertinoIcons.refresh_thin,
+                      color: Colors.white),
+                ),
+              ),
+            ],
           ),
+          const SizedBox(
+            height: 100,
+          )
         ],
       ),
     );
