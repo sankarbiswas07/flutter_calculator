@@ -8,12 +8,41 @@ class CalculatorView extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Column(
-        children: const [
-          SizedBox(
+        children: [
+          const SizedBox(
             height: 60,
           ),
-          NumInput(hint: "I am One!"),
-          NumInput(),
+          const NumInput(hint: "Type number one"),
+          const NumInput(hint: "Type number two"),
+          const Text(
+            "0",
+            style: TextStyle(
+              fontSize: 64,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
+          const Spacer(),
+          Container(
+            height: 60,
+            width: double.infinity, // Full width
+            decoration: BoxDecoration(
+              color: Colors.red, // Red background color
+              borderRadius: BorderRadius.circular(10), // 10px border radius
+            ),
+            child: InkWell(
+              onTap: () {
+                // Add your button click logic here
+              },
+              child: const Center(
+                child: Text(
+                  'Click Me!',
+                  style:
+                      TextStyle(color: Colors.white), // Set text color to white
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
