@@ -1,8 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class CalculatorView extends StatelessWidget {
+class CalculatorView extends StatefulWidget {
   const CalculatorView({super.key});
+
+  @override
+  State<CalculatorView> createState() => _CalculatorViewState();
+}
+
+class _CalculatorViewState extends State<CalculatorView> {
+  num x = 0;
+  num z = 0;
+  num y = 0;
+
+  final inputXController = TextEditingController();
+  final inputYController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    inputXController.text = x.toString();
+    inputYController.text = y.toString();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,11 +32,11 @@ class CalculatorView extends StatelessWidget {
           const SizedBox(
             height: 60,
           ),
-          const NumInput(hint: "Type number one"),
-          const NumInput(hint: "Type number two"),
-          const Text(
-            "0",
-            style: TextStyle(
+          NumInput(hint: "Type number one", controller: inputXController),
+          NumInput(hint: "Type number two", controller: inputYController),
+          Text(
+            z.toString(),
+            style: const TextStyle(
               fontSize: 64,
               fontWeight: FontWeight.bold,
               color: Colors.black,
@@ -39,7 +58,10 @@ class CalculatorView extends StatelessWidget {
                 child: InkWell(
                   onTap: () {
                     // Add your button click logic here
-                    print("> / ");
+                    setState(() {
+                      z = num.tryParse(inputXController.text)! /
+                          num.tryParse(inputYController.text)!;
+                    });
                   },
                   child: const Icon(CupertinoIcons.divide, color: Colors.white),
                 ),
@@ -55,7 +77,10 @@ class CalculatorView extends StatelessWidget {
                 child: InkWell(
                   onTap: () {
                     // Add your button click logic here
-                    print("> x ");
+                    setState(() {
+                      z = num.tryParse(inputXController.text)! *
+                          num.tryParse(inputYController.text)!;
+                    });
                   },
                   child:
                       const Icon(CupertinoIcons.multiply, color: Colors.white),
@@ -72,7 +97,10 @@ class CalculatorView extends StatelessWidget {
                 child: InkWell(
                   onTap: () {
                     // Add your button click logic here
-                    print("> + ");
+                    setState(() {
+                      z = num.tryParse(inputXController.text)! +
+                          num.tryParse(inputYController.text)!;
+                    });
                   },
                   child: const Icon(CupertinoIcons.add, color: Colors.white),
                 ),
@@ -88,12 +116,15 @@ class CalculatorView extends StatelessWidget {
                 child: InkWell(
                   onTap: () {
                     // Add your button click logic here
-                    print("> - ");
+                    setState(() {
+                      z = num.tryParse(inputXController.text)! -
+                          num.tryParse(inputYController.text)!;
+                    });
                   },
                   child: const Icon(CupertinoIcons.minus, color: Colors.white),
                 ),
               ),
-              // button: divide
+              // button: refresh
               Container(
                 height: 48,
                 width: 48, // Full width
@@ -104,7 +135,13 @@ class CalculatorView extends StatelessWidget {
                 child: InkWell(
                   onTap: () {
                     // Add your button click logic here
-                    print("> / ");
+                    setState(() {
+                      x = 0;
+                      y = 0;
+                      z = 0;
+                      inputXController.clear();
+                      inputYController.clear();
+                    });
                   },
                   child: const Icon(CupertinoIcons.refresh_thin,
                       color: Colors.white),
@@ -123,16 +160,19 @@ class CalculatorView extends StatelessWidget {
 
 class NumInput extends StatelessWidget {
   final String? hint;
+  final TextEditingController controller;
 
   const NumInput({
     super.key,
     this.hint = "Enter a number",
+    required this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
     return Column(children: [
       TextField(
+        controller: controller,
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
           focusedBorder: OutlineInputBorder(
