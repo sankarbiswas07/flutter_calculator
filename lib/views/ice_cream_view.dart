@@ -10,17 +10,25 @@ class IceCreamView extends StatefulWidget {
   State<IceCreamView> createState() => _IceCreamViewState();
 }
 
-Future<void> loadIceCreams() async {
-  final rawIceCreams = await rootBundle.loadString("assets/iceCream.json");
-  final decodedIceCreams = jsonDecode(rawIceCreams);
-  print(decodedIceCreams);
-}
-
 class _IceCreamViewState extends State<IceCreamView> {
+  Map<String, dynamic>? decodedIceCreams;
+
   @override
   void initState() {
     super.initState();
     loadIceCreams();
+  }
+
+  Future<void> loadIceCreams() async {
+    final rawIceCreams = await rootBundle.loadString("assets/iceCream.json");
+    decodedIceCreams = jsonDecode(rawIceCreams);
+    await Future.delayed(
+      const Duration(milliseconds: 800),
+    );
+    setState(() {
+      // ensuring application rebuild, otherwise ice-creams will melt
+      print("view re-rendered!");
+    });
   }
 
   @override
@@ -42,6 +50,23 @@ class _IceCreamViewState extends State<IceCreamView> {
             "Savor joy, one delightful scoop at a time.",
             style: Theme.of(context).textTheme.bodySmall!,
           ),
+          Expanded(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  if (decodedIceCreams != null)
+                    const Text("ice-cream loaded !!")
+                  else
+                    const CircularProgressIndicator.adaptive(
+                      backgroundColor: Colors.amber,
+                    )
+                  // const Text("ice-cream melted !!")
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );
