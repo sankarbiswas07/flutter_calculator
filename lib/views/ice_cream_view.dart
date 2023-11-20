@@ -1,16 +1,15 @@
-import 'dart:convert';
-
+import 'package:basics/model/ice_cream_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class IceCreamView extends StatelessWidget {
   const IceCreamView({super.key});
 
-  Future<Map<String, dynamic>> loadIceCreams() async {
+  Future<List<IceCream>?> loadIceCreams() async {
     final rawIceCreams = await rootBundle.loadString("assets/iceCream.json");
     await Future.delayed(const Duration(milliseconds: 1000));
-    final decodedIceCreams = jsonDecode(rawIceCreams);
-    return decodedIceCreams;
+    final iceCreams = iceCreamDataFromJson(rawIceCreams);
+    return iceCreams.iceCreams;
   }
 
   @override
@@ -44,9 +43,8 @@ class IceCreamView extends StatelessWidget {
                       if (snapshot.connectionState == ConnectionState.done) {
                         // Check if there is data
                         if (snapshot.hasData) {
-                          final iceCreams =
-                              snapshot.data as Map<String, dynamic>;
-                          return Text(iceCreams["iceCreams"][0]["flavor"]);
+                          final iceCreams = snapshot.data;
+                          return Text(iceCreams!.first.flavor.toString());
                         } else {
                           // Handle the case where there is no data
                           return const Text("No data available");
